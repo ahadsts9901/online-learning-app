@@ -165,8 +165,8 @@ function editName() {
                            <input id="swal-input-lastname" class="swal2-input" placeholder="Last Name" value="${data.lastName || ''}">`,
                                     focusConfirm: false,
                                     showCancelButton: true,
-                                    cancelButtonColor: "#66ba45",
-                                    confirmButtonColor: "#66ba45",
+                                    cancelButtonColor: "#18171F",
+                                    confirmButtonColor: "#18171F",
                                     preConfirm: () => {
                                         const newFirstName = document.getElementById('swal-input-firstname').value;
                                         const newLastName = document.getElementById('swal-input-lastname').value;
@@ -300,7 +300,7 @@ function renderProducts() {
                     // console.log(data)
 
                     let product = document.createElement("div")
-                    product.className += "flex justify-between items-center gap-[1em] p-[0.5em] w-[100%] border-[1px] border-[#66ba45] rounded-[10px]"
+                    product.className += "flex justify-between items-center gap-[1em] p-[0.5em] w-[100%] border-[1px] border-[#18171F] rounded-[10px]"
 
                     let image = document.createElement("img")
                     image.className += "product w-[6em] h-[4em] rounded-[15px] object-cover"
@@ -342,149 +342,113 @@ function adminOrders() {
     var container = document.querySelector(".adminOrders");
     container.innerHTML = "";
 
-    db.collection("orders")
-        .orderBy("time", "desc") //sort by time
+    db.collection("enrolls")
         .get()
         .then(function (querySnapshot) {
             if (querySnapshot.size === 0) {
-                container.innerHTML = "<div class='blue'>No Orders found</div>";
+                container.innerHTML = "<div class='blue'>No enrolls found</div>";
             } else {
                 querySnapshot.forEach(function (doc) {
                     var data = doc.data();
 
-                    let userName = firebase.auth().currentUser.email
+                    console.log(data);
 
-                    if (data.userEmail === userName) {
-                        // console.log(data);
+                    let product = document.createElement("div")
+                    product.className += "flex flex-col justify-between items-start gap-[1em] border-b-[1px] border-[#ccc] p-[0.5em] w-[100%]"
 
-                        let product = document.createElement("div")
-                        product.className += "flex flex-col justify-between items-start gap-[1em] border-b-[1px] border-[#ccc] p-[0.5em] w-[100%]"
+                    let head = document.createElement("div")
+                    head.className += "flex justify-between items-center gap-[1em] w-[100%]"
 
-                        let head = document.createElement("div")
-                        head.className += "flex justify-between items-center gap-[1em] w-[100%]"
+                    let orderName = document.createElement("p")
+                    orderName.className += "text-[#212121] text-left text-[1.5em]"
+                    orderName.innerText = "Name: " + data.name
 
-                        let orderName = document.createElement("p")
-                        orderName.className += "text-[#212121] text-left"
-                        orderName.innerText = data.name
+                    let cont = document.createElement("div")
+                    cont.className += "flex flex-col justify-right items-start w-[fit-content]"
 
-                        let cont = document.createElement("div")
-                        cont.className += "flex flex-col justify-right items-start w-[fit-content]"
+                    let body = document.createElement("div")
+                    body.className += "flex flex-col justify-start items-start gap-[0.5em]"
 
-                        // time
+                    let age = document.createElement("p")
+                    age.className += "w-[100%] text-left text-[#212121]"
+                    age.innerText = "Age: " + data.age
 
-                        let orderTime = document.createElement("p")
-                        orderTime.className += "text-[#aaa] text-[0.6em] text-left"
-                        orderTime.innerText = `${moment(data.time.seconds).fromNow()} - ${data.status}`
+                    let course = document.createElement("p")
+                    course.className += "w-[100%] text-left text-[#212121]"
+                    course.innerText = "Course Name: " + data.courseName
 
-                        let num = document.createElement("p")
-                        num.className += "text-[#212121] text-[0.8em] text-right"
-                        num.innerText = data.number
+                    let gml = document.createElement("p")
+                    gml.className += "w-[100%] text-left text-[#212121]"
+                    gml.innerText = "Email: " + data.userEmail
 
-                        // time completed
+                    let num = document.createElement("p")
+                    num.className += "w-[100%] text-left text-[#212121]"
+                    num.innerText = "Contact: " + data.number
 
-                        let body = document.createElement("div")
-                        body.className += "flex flex-col justify-start items-start gap-[0em]"
+                    let qualification = document.createElement("p")
+                    qualification.className += "w-[100%] text-left text-[#212121]"
+                    qualification.innerText = "Qualification: " + data.qualification
 
-                        // products quantity algorithm started
+                    let address = document.createElement("p")
+                    address.className += "w-[100%] text-left text-[#212121]"
+                    address.innerText = "Address: " + data.address
 
-                        const productQuantities = {};
+                    let del = document.createElement("p")
+                    del.className += "w-[100%] text-left text-[#888] text=[0.8em]"
+                    del.innerText = "Delete"
+                    del.addEventListener("click", function () {
+                        delDoc(doc.id)
+                    })
 
-                        data.items.forEach((product) => {
-                            const productName = product.name;
-                            if (productQuantities[productName]) {
-                                productQuantities[productName].quantity += 1;
-                            } else {
-                                productQuantities[productName] = {
-                                    quantity: 1,
-                                    name: productName,
-                                    unit: product.unit,
-                                    price: product.price,
-                                    image: product.image,
-                                };
+                    function delDoc(docId) {
+
+                        Swal.fire({
+                            title: 'Delete Course',
+                            text: 'Are you sure you want to delete this course?',
+                            showCancelButton: true,
+                            confirmButtonText: 'Delete',
+                            cancelButtonText: 'Cancel',
+                            confirmButtonColor: '#212121',
+                            cancelButtonColor: '#212121',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "Deleted",
+                                    confirmButtonText: "OK",
+                                    confirmButtonColor: "#212121",
+                                });
+
+                                db.collection("enrolls").doc(docId).delete();
                             }
+
+                            setTimeout(() => {
+                                window.location.reload()
+                            }, 2000)
+
                         });
 
-                        for (const productName in productQuantities) {
-                            const product = productQuantities[productName];
-                            const productQuantity = product.quantity;
-                            let finalQuantity = `${productName} x ${productQuantity}`
-                            // console.log(`Unit: ${product.unit}`);
-                            // console.log(`Price: ${product.price}`);
-                            // console.log(`Image: ${product.image}`);
-                            // console.log('---');
-
-                            let quantity = document.createElement("p")
-                            quantity.className += "text-[#aaa] text-[0.8em]"
-                            quantity.innerText = finalQuantity
-
-                            body.appendChild(quantity)
-                        }
-
-                        //   algorithm completed
-
-                        let footer = document.createElement("div")
-                        footer.className += "flex justify-between items-center w-[100%]"
-
-                        let footerTotal = document.createElement("p")
-                        footerTotal.className += "text-[#212121]"
-                        footerTotal.innerText = "Total"
-
-                        let footerPrice = document.createElement("p")
-                        footerPrice.className += "text-[#66ba45]"
-                        footerPrice.innerText = `Rs ${data.total}`
-
-                        footer.appendChild(footerTotal)
-                        footer.appendChild(footerPrice)
-
-                        // making select
-
-                        let select = document.createElement("select")
-                        select.className += "w-[100%] bg-[#fff] text-[#888] border-0 rounded-[5px] p-[0.5em]"
-                        select.addEventListener("change", function () { updateStatus(doc.id, select.value) })
-
-                        function updateStatus(orderId, newStatus) {
-                            var orderRef = db.collection("orders").doc(orderId);
-
-                            orderRef.update({
-                                status: newStatus
-                            })
-                                .then(function () {
-                                    // console.log("Status updated successfully!");
-                                })
-                                .catch(function (error) {
-                                    console.error("Error updating status: ", error);
-                                });
-                        }
-
-
-                        let opt1 = document.createElement("option")
-                        opt1.innerText = "Pending"
-                        opt1.value = "Pending"
-                        select.appendChild(opt1)
-
-                        let opt2 = document.createElement("option")
-                        opt2.innerText = "In Progress"
-                        opt2.value = "In Progress"
-                        select.appendChild(opt2)
-
-                        let opt3 = document.createElement("option")
-                        opt3.innerText = "Delievered"
-                        opt3.value = "Delievered"
-                        select.appendChild(opt3)
-
-                        head.appendChild(cont)
-                        head.appendChild(num)
-                        cont.appendChild(orderName)
-                        cont.appendChild(orderTime)
-
-                        product.appendChild(head)
-                        product.appendChild(body)
-                        product.appendChild(footer)
-                        product.appendChild(select)
-
-                        container.appendChild(product)
-
                     }
+
+
+                    body.appendChild(age)
+                    body.appendChild(course)
+                    body.appendChild(gml)
+                    body.appendChild(num)
+                    body.appendChild(qualification)
+                    body.appendChild(address)
+                    body.appendChild(del)
+
+
+                    head.appendChild(cont)
+                    cont.appendChild(orderName)
+
+                    product.appendChild(head)
+                    product.appendChild(body)
+
+                    container.appendChild(product)
+
+
 
                 });
             }
@@ -513,7 +477,7 @@ function renderCourse(courseId) {
                         console.log(data);
 
                         let product = document.createElement("div");
-                        product.className += "flex flex-col justify-start items-start gap-[1em] p-[0.5em] w-[100%] border-[1px] border-[#66ba45] rounded-[10px]";
+                        product.className += "flex flex-col justify-start items-start gap-[1em] p-[0.5em] w-[100%] border-[1px] border-[#18171F] rounded-[10px]";
 
                         let title = document.createElement("p");
                         title.className += "font-bold text-[2em] w-[100%] text-left";

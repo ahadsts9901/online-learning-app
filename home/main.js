@@ -278,78 +278,6 @@ function renderProducts() {
 
 }
 
-function renderCartToUser() {
-    let productsData = localStorage.getItem("smitProducts");
-    productsData = JSON.parse(productsData);
-
-    if (!productsData || !productsData.items) {
-        // Handle the case where there's no data or items
-        return;
-    }
-
-    let items = productsData.items;
-    let container = document.querySelector(".cart");
-
-    // Create an object to keep track of unique items
-    const uniqueItems = {};
-
-    // Initialize the total variable
-    let total = 0;
-
-    items.forEach(data => {
-        // Check if the item already exists in uniqueItems
-        if (uniqueItems[data.name]) {
-            // If it exists, increment the quantity and update the total price
-            uniqueItems[data.name].quantity++;
-            uniqueItems[data.name].totalPrice += Number(data.price);
-        } else {
-            // If it doesn't exist, create a new entry
-            uniqueItems[data.name] = {
-                quantity: 1,
-                totalPrice: Number(data.price),
-                data: data
-            };
-        }
-
-        // Update the total with the current item's total price
-        total += Number(data.price);
-    });
-
-    // Clear the container before rendering items
-    container.innerHTML = "";
-
-    // Iterate over the unique items and render them
-    for (const itemName in uniqueItems) {
-        const item = uniqueItems[itemName].data;
-        const quantity = uniqueItems[itemName].quantity;
-        const totalPrice = uniqueItems[itemName].totalPrice;
-
-        let product = document.createElement("div");
-        product.className = "flex justify-left items-center gap-[1em] p-[0.5em] w-[100%]";
-
-        let image = document.createElement("img");
-        image.className = "product w-[7em] h-[5em] rounded-[15px] object-cover";
-        image.src = item.image;
-
-        let title = document.createElement("p");
-        title.className = "font-bold text-[1em]";
-        title.innerText = item.name;
-
-        let det = document.createElement("p");
-        det.className = "text-[0.8em] text-[#212121] w-[100%] text-right";
-        det.innerText = `${totalPrice} - ${item.unit} (x${quantity})`;
-
-        product.appendChild(image);
-        product.appendChild(title);
-        product.appendChild(det);
-
-        container.appendChild(product);
-    }
-
-    document.querySelector("#total").innerText = `Rs ${total}`
-
-}
-
 function enroll(event) {
 
     event.preventDefault()
@@ -357,21 +285,21 @@ function enroll(event) {
     let courseId = localStorage.getItem("enrollId")
 
     let name = document.querySelector("#nameInput").value
-    let email = document.querySelector("#emailInput").value
     let number = document.querySelector("#numberInput").value
     let address = document.querySelector("#addressInput").value
     let age = document.querySelector("#age").value
     let qualification = document.querySelector("#qualification").value
+    let courseName = localStorage.getItem("name")
     let userEmail = firebase.auth().currentUser.email
 
     let student = {
         name: name,
-        email: email,
         number: number,
         address: address,
         age: age,
         qualification: qualification,
-        userEmail: userEmail
+        userEmail: userEmail,
+        courseName: courseName
     }
 
     db.collection("enrolls")
@@ -398,9 +326,9 @@ function enroll(event) {
             event.target.reset()
             localStorage.setItem("enrollId", "")
 
-            setTimeout(()=>{
+            setTimeout(() => {
                 window.location.reload()
-            },2000)
+            }, 2000)
 
         })
         .catch(error => {
@@ -409,138 +337,12 @@ function enroll(event) {
 
 }
 
-function userOrders() {
-
-    var container = document.querySelector(".userOrders");
-    container.innerHTML = "";
-
-    db.collection("orders")
-        .orderBy("time", "desc") //sort by time
-        .get()
-        .then(function (querySnapshot) {
-            if (querySnapshot.size === 0) {
-                container.innerHTML = "<div class='blue'>No Orders found</div>";
-            } else {
-                querySnapshot.forEach(function (doc) {
-                    var data = doc.data();
-
-                    let userName = firebase.auth().currentUser.email
-
-                    if (data.userEmail === userName) {
-                        // console.log(data);
-
-                        let product = document.createElement("div")
-                        product.className += "flex flex-col justify-between items-start gap-[1em] border-b-[1px] border-[#ccc] p-[0.5em] w-[100%]"
-
-                        let head = document.createElement("div")
-                        head.className += "flex justify-between items-center gap-[1em] w-[100%]"
-
-                        let orderName = document.createElement("p")
-                        orderName.className += "text-[#212121] text-left"
-                        orderName.innerText = data.name
-
-                        let cont = document.createElement("div")
-                        cont.className += "flex flex-col justify-right items-start w-[fit-content]"
-
-                        // time
-
-                        let orderTime = document.createElement("p")
-                        orderTime.className += "text-[#aaa] text-[0.6em] text-left"
-                        orderTime.innerText = `${moment(data.time.seconds).fromNow()} - ${data.status}`
-
-                        let num = document.createElement("p")
-                        num.className += "text-[#212121] text-[0.8em] text-right"
-                        num.innerText = data.number
-
-                        // time completed
-
-                        let body = document.createElement("div")
-                        body.className += "flex flex-col justify-start items-start gap-[0em]"
-
-                        // products quantity algorithm started
-
-                        const productQuantities = {};
-
-                        data.items.forEach((product) => {
-                            const productName = product.name;
-                            if (productQuantities[productName]) {
-                                productQuantities[productName].quantity += 1;
-                            } else {
-                                productQuantities[productName] = {
-                                    quantity: 1,
-                                    name: productName,
-                                    unit: product.unit,
-                                    price: product.price,
-                                    image: product.image,
-                                };
-                            }
-                        });
-
-                        for (const productName in productQuantities) {
-                            const product = productQuantities[productName];
-                            const productQuantity = product.quantity;
-                            let finalQuantity = `${productName} x ${productQuantity}`
-                            // console.log(`Unit: ${product.unit}`);
-                            // console.log(`Price: ${product.price}`);
-                            // console.log(`Image: ${product.image}`);
-                            // console.log('---');
-
-                            let quantity = document.createElement("p")
-                            quantity.className += "text-[#aaa] text-[0.8em]"
-                            quantity.innerText = finalQuantity
-
-                            body.appendChild(quantity)
-                        }
-
-                        //   algorithm completed
-
-                        let footer = document.createElement("div")
-                        footer.className += "flex justify-between items-center w-[100%]"
-
-                        let footerTotal = document.createElement("p")
-                        footerTotal.className += "text-[#212121]"
-                        footerTotal.innerText = "Total"
-
-                        let footerPrice = document.createElement("p")
-                        footerPrice.className += "text-[#18171F]"
-                        footerPrice.innerText = `Rs ${data.total}`
-
-                        footer.appendChild(footerTotal)
-                        footer.appendChild(footerPrice)
-
-                        head.appendChild(cont)
-                        head.appendChild(num)
-                        cont.appendChild(orderName)
-                        cont.appendChild(orderTime)
-
-                        product.appendChild(head)
-                        product.appendChild(body)
-                        product.appendChild(footer)
-                        container.appendChild(product)
-
-                    }
-
-                });
-            }
-        })
-        .catch(function (error) {
-            console.error("Error getting documents: ", error);
-        });
-
-}
-
 document.addEventListener("DOMContentLoaded", function () {
-    try {
-        renderProducts();
-    } catch (error) {
-        console.error('render products', error);
-        try {
-            renderCartToUser();
-        } catch (error) {
-            console.error("userOrders", error);
-            userOrders()
-        }
-    }
+   try{
+    renderProducts()
+   }catch{
+    userCourses()
+   }
 });
 
 
@@ -561,11 +363,13 @@ db.collection("products")
                     var data = doc.data();
                     console.log(data);
 
+                    localStorage.setItem("name", data.name)
+
                     let product = document.createElement("div");
-                    product.className += "flex flex-col justify-start items-start gap-[1em] p-[0.5em] w-[100%] border-[1px] border-[#66ba45] rounded-[10px]";
+                    product.className += "flex flex-col justify-start items-start gap-[1em] p-[0.5em] w-[100%] border-[1px] border-[#18171F] rounded-[10px]";
 
                     let title = document.createElement("p");
-                    title.className += "font-bold text-[2em] w-[100%] text-left";
+                    title.className += "courseName font-bold text-[2em] w-[100%] text-left";
                     title.innerText = data.name;
 
                     let desc = document.createElement("p");

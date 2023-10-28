@@ -42,7 +42,7 @@
 
     <div class="flex w-[100%] h-[100%] p-[0em_1em] flex-col justify-right items-center">
 
-        <p class="text-[#03509c] text-[1.2em] text-left w-[100%]">Orders</p>
+        <!-- <p class="text-[#03509c] text-[1.2em] text-left w-[100%]">Applied Courses</p> -->
 
         <div class="cart userOrders w-[100%] h-[100%] p-[1em] flex flex-col justify-right items-start gap-[0.5em]">
         </div>
@@ -86,6 +86,93 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <!-- javascript -->
     <script src="./main.js"></script>
+    <script>
+        console.log("user courses");
+
+        var container = document.querySelector(".userOrders");
+        container.innerHTML = "";
+
+        db.collection("enrolls")
+            .get()
+            .then(function (querySnapshot) {
+                if (querySnapshot.size === 0) {
+                    container.innerHTML = "<div class='blue'>No enrolls found</div>";
+                } else {
+                    querySnapshot.forEach(function (doc) {
+                        var data = doc.data();
+
+                        let userName = firebase.auth().currentUser.email
+
+                        if (userName === data.userEmail) {
+
+                            console.log(data);
+
+                            let product = document.createElement("div")
+                            product.className += "flex flex-col justify-between items-start gap-[1em] border-b-[1px] border-[#ccc] p-[0.5em] w-[100%]"
+
+                            let head = document.createElement("div")
+                            head.className += "flex justify-between items-center gap-[1em] w-[100%]"
+
+                            let orderName = document.createElement("p")
+                            orderName.className += "text-[#212121] text-left text-[1.5em]"
+                            orderName.innerText = "Name: " + data.name
+
+                            let course = document.createElement("p")
+                            course.className += "text-[#212121] text-left text-[1.5em]"
+                            course.innerText = "Course Name: " + data.courseName
+
+                            let cont = document.createElement("div")
+                            cont.className += "flex flex-col justify-right items-start w-[fit-content]"
+
+                            let body = document.createElement("div")
+                            body.className += "flex flex-col justify-start items-start gap-[0.5em]"
+
+                            let age = document.createElement("p")
+                            age.className += "w-[100%] text-left text-[#212121]"
+                            age.innerText = "Age: " + data.age
+
+                            let gml = document.createElement("p")
+                            gml.className += "w-[100%] text-left text-[#212121]"
+                            gml.innerText = "Email: " + data.userEmail
+
+                            let num = document.createElement("p")
+                            num.className += "w-[100%] text-left text-[#212121]"
+                            num.innerText = "Contact: " + data.number
+
+                            let qualification = document.createElement("p")
+                            qualification.className += "w-[100%] text-left text-[#212121]"
+                            qualification.innerText = "Qualification: " + data.qualification
+
+                            let address = document.createElement("p")
+                            address.className += "w-[100%] text-left text-[#212121]"
+                            address.innerText = "Address: " + data.address
+
+                            body.appendChild(course)
+                            body.appendChild(age)
+                            body.appendChild(gml)
+                            body.appendChild(num)
+                            body.appendChild(qualification)
+                            body.appendChild(address)
+
+
+                            head.appendChild(cont)
+                            cont.appendChild(orderName)
+
+                            product.appendChild(head)
+                            product.appendChild(body)
+
+                            container.appendChild(product)
+                        }
+
+
+
+                    });
+                }
+            })
+            .catch(function (error) {
+                console.error("Error getting documents: ", error);
+            });
+    </script>
 </body>
 
 </html>
