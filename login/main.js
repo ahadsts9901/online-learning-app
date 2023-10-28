@@ -42,7 +42,7 @@ function login(event) {
     let password = document.getElementById("password-login").value
     let message = document.querySelector(".validationMessage");
 
-    if (!(email.endsWith("@gmail.com"))) {
+    if (!(email.endsWith(".com"))) {
         message.innerText = `Invalid email address`;
         message.style.display = "block";
         message.style.color = "#e55865";

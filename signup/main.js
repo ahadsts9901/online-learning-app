@@ -6,7 +6,7 @@ const firebaseConfig = {
     messagingSenderId: "76794892993",
     appId: "1:76794892993:web:39ca0e90b1d98808343a40",
     measurementId: "G-G0PYS1MSLT"
-  };
+};
 
 // initialize firebase
 firebase.initializeApp(firebaseConfig);
@@ -46,7 +46,7 @@ function signup(event) {
     let photoU = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
     let message = document.querySelector(".validationMessage");
 
-    if (!email.endsWith("@gmail.com")) {
+    if (!email.endsWith(".com")) {
         message.innerText = `Invalid email address`;
         message.style.display = "block";
         message.style.color = "#e55865";
@@ -91,22 +91,6 @@ function signup(event) {
         return;
     }
 
-    db.collection("users")
-        .add({
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            photo: photoU,
-            isAdmin: false
-        })
-        .then((docRef) => {
-            // console.log("signed added")
-        })
-        .catch((error) => {
-            console.error("error signup")
-        });
-
-
     // firebase
 
     firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -116,7 +100,21 @@ function signup(event) {
             user.updateProfile({
                 photoURL: user.photoURL,
             }).then(() => {
-                // Now the photoURL is set for the user
+                db.collection("users")
+                    .add({
+                        firstName: firstName,
+                        lastName: lastName,
+                        email: email,
+                        photo: photoU,
+                        isAdmin: false
+                    })
+                    .then((docRef) => {
+                        // console.log("signed added")
+                    })
+                    .catch((error) => {
+                        console.error("error signup")
+
+                    });
                 window.location.href = "../home/index.html";
             }).catch((error) => {
                 console.error("Error setting profile picture:", error);
@@ -124,12 +122,16 @@ function signup(event) {
         })
         .catch((error) => {
             console.error("Error creating user:", error);
+            message.innerText = `User Already In Use`;
+            message.style.display = "block";
+            message.style.color = "#e55865";
+            return;
         });
 
-    // Reset the input fields after successful signup
-    document.getElementById("first-name").value = "";
-    document.getElementById("last-name").value = "";
-    document.getElementById("email-signup").value = "";
-    document.getElementById("password-signup").value = "";
-    document.getElementById("password-signup-repeat").value = "";
+    // // Reset the input fields after successful signup
+    // document.getElementById("first-name").value = "";
+    // document.getElementById("last-name").value = "";
+    // document.getElementById("email-signup").value = "";
+    // document.getElementById("password-signup").value = "";
+    // document.getElementById("password-signup-repeat").value = "";
 }
