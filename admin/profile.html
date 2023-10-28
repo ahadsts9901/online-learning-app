@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    </meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    </meta>
+    <title>Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    </meta>
+    <!-- icons cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    </link>
+    <!-- font cdn -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- css -->
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    </link>
+    <!-- tailwind css -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+
+    <div class="flex flex-col justify-right items-center gap-[1em] w-[100%] p-[1em]">
+        <h1 class="text-[#03509c] text-[1.5em]">Settings</h1>
+        <img src="../assets/profile.webp"
+            class="userProfile w-[6em] h-[6em] rounded-[100%] object-cover border-[1px] border-[#18171F]">
+        <input onchange="file(event)" type="file" hidden id="file" accept="image/*">
+        <label for="file"><i class="bi bi-pencil-fill text-[#03509c] absolute z-10 top-[9em] pl-[2em]"></i></label>
+        <p><span id="userName"></span> <i class="bi bi-pencil-fill text-[#18171F]" onclick="editName()"></i></p>
+    </div>
+
+    <button class="button w-[80%] m-[auto]" onclick="logout()">Logout</button>
+
+    <div class="navBarGreen flex justify-between items-center p-[1em] w-[100%] bg-[#f0f0f0]">
+        <a href="./index.html" class="flex w-[5em] flex-col justify-center items-center">
+            <i class="text-[#666] bi bi-house-fill text-[1.5em]"></i>
+            <p class="text-[#777]">Home</p>
+        </a>
+
+        <a href="./add.html" class="flex w-[5em] flex-col justify-center items-center">
+            <i class="text-[#666] bi bi-plus-circle text-[1.5em]"></i>
+            <p class="text-[#777]">Add</p>
+        </a>
+
+        <a href="./profile.html" class="flex w-[5em] flex-col justify-center items-center">
+            <i class="text-[#18171F] bi bi-person-fill text-[1.5em]"></i>
+            <p class="text-[#777]">Account</p>
+        </a>
+    </div>
+
+    <!-- firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <!-- sweet alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- javascript -->
+    <script src="./main.js"></script>
+</body>
+
+</html>

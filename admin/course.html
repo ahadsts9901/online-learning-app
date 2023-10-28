@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    </meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    </meta>
+    <title>Course</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    </meta>
+    <!-- icons cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    </link>
+    <!-- font cdn -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- css -->
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    </link>
+    <!-- tailwind css -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+
+    <div class="w-[100%] p-[1em] flex flex-col justify-center gap-[1em] items-center">
+
+        <div class="w-[100%] flex justify-center gap-[1em] items-center border-b-[1px] border-[#ccc] pb-[1em]">
+            <i class="text-[#666] bi bi-arrow-left-circle-fill text-[1.5em]" onclick="window.history.back()"></i>
+            <img id="adminImg" src="../assets/profile.webp"
+                class="w-[3em] h-[3em] border-[2px] border-[#18171F] rounded-[100%]">
+            <div class="flex flex-col justify-center">
+                <p id="adminName" class="text-[#03509c]"></p>
+                <p class="text-[#18171F] text-[0.8em]">Admin</p>
+            </div>
+            <a href="./orders.html" class="journal text-[#212121] bi bi-journal-text text-[1.5em]"></a>
+        </div>
+
+        <p id="courseName" class="w-[100%] text-left text-[#03509c]"></p>
+
+        <div class="course flex flex-col justify-right items-center gap-[1em] p-[1em] w-[100%]"></div>
+
+        <!-- <div class="p-[3em]"></div> -->
+
+        <!-- <div class="userNav navBarGreen flex justify-between items-center p-[1em] w-[100%] bg-[#f0f0f0]">
+            <a href="./index.html" class="flex w-[5em] flex-col justify-center items-center">
+                <i class="text-[#18171F] bi bi-house-fill text-[1.5em]"></i>
+                <p class="text-[#777]">Home</p>
+            </a>
+
+            <a href="./add.html" class="flex w-[5em] flex-col justify-center items-center">
+                <i class="text-[#666] bi bi-plus-circle text-[1.5em]"></i>
+                <p class="text-[#777]">Add</p>
+            </a>
+
+            <a href="./profile.html" class="flex w-[5em] flex-col justify-center items-center">
+                <i class="text-[#666] bi bi-person-fill text-[1.5em]"></i>
+                <p class="text-[#777]">Account</p>
+            </a>
+        </div> -->
+
+    </div>
+
+
+    <!-- firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <!-- sweet alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- javascript -->
+    <script src="./main.js"></script>
+    <script>
+        // logout automatically
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (!user) {
+                // console.log("yes");
+                window.location.href = "../login/index.html";
+            } else {
+                let username = user.email
+                {
+                    db.collection("users")
+                        .get()
+                        .then((querySnapshot) => {
+                            {
+                                querySnapshot.forEach(function (doc) {
+                                    var data = doc.data();
+
+                                    if (data.email === username) {
+                                        document.querySelector("#adminImg").src = data.photo;
+                                        document.querySelector("#adminName").innerText = `${data.firstName} ${data.lastName}`;
+                                        // console.log("founded cart")
+                                    }
+
+                                })
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("Error getting posts: ", error);
+                        });
+                }
+            }
+        });
+
+    </script>
+</body>
+
+</html>

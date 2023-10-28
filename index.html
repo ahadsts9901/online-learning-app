@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    </meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    </meta>
+    <title>Online Learning App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    </meta>
+    <!-- icons cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    </link>
+    <!-- font cdn -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- css -->
+    <link rel="stylesheet" type="text/css" href="./main.css">
+    </link>
+</head>
+
+<body>
+
+    <div class="landing">
+
+        <img src="./assets/student.png" class="logo">
+        <h2 class="center" style="color: #18171F;">LEARNING APP</h2>
+        <h4 class="center" style="color: #03509c;">MAKE YOUR FUTURE</h4>
+        <button onclick="window.location.href ='./signup/index.html'" class="button"
+            style="margin: 0; margin-top: 1em; font-size: 1em;">Get Started</button>
+
+    </div>
+
+    <!-- firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <!-- sweet alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- javascript -->
+
+    <script>
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCMng_8MwnzIoWiRS2_AyVyYMplV5QcE1c",
+            authDomain: "students-management-syst-28aac.firebaseapp.com",
+            projectId: "students-management-syst-28aac",
+            storageBucket: "students-management-syst-28aac.appspot.com",
+            messagingSenderId: "76794892993",
+            appId: "1:76794892993:web:39ca0e90b1d98808343a40",
+            measurementId: "G-G0PYS1MSLT"
+        };
+        // initialize firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // logout automatically
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                window.location.href = "./home/index.html";
+            }
+        });
+
+    </script>
+</body>
+
+
+</html>

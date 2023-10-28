@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    </meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    </meta>
+    <title>Orders</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    </meta>
+    <!-- icons cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    </link>
+    <!-- font cdn -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- css -->
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    </link>
+    <!-- tailwind css -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+
+    <div class="w-[100%] p-[1em] flex flex-col justify-center gap-[1em] items-center">
+
+        <div class="w-[100%] flex justify-center gap-[1em] items-center border-b-[1px] border-[#ccc] pb-[1em]">
+            <i class="text-[#666] bi bi-arrow-left-circle-fill text-[1.5em]" onclick="window.history.back()"></i>
+            <img src="../assets/profile.webp" id="adminImg"
+                class="w-[3em] h-[3em] border-[2px] border-[#18171F] rounded-[100%]">
+            <div class="flex flex-col justify-center">
+                <p id="adminName" class="text-[#03509c]"></p>
+                <p class="text-[#18171F] text-[0.8em]">Admin</p>
+            </div>
+            <a href="./orders.html" class="journal text-[#222] bi bi-journal-text text-[1.5em]"></a>
+        </div>
+
+        <p class="w-[100%] text-left text-[#03509c]">Orders</p>
+
+        <div class="adminOrders w-[100%] flex flex-col justify-right items-start gap-[1em] p-[0.5em]"></div>
+
+        <!-- <div class="h-[5em]"></div> -->
+
+    </div>
+
+    <!-- firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <!-- sweet alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- moment js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <!-- javascript -->
+    <script src="./main.js"></script>
+</body>
+
+</html>

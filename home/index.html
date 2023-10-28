@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    </meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    </meta>
+    <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    </meta>
+    <!-- icons cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    </link>
+    <!-- font cdn -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- css -->
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    </link>
+    <!-- tailwind css -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+
+    <div class="flex flex-col justify-right items-center gap-[1em] w-[100%] p-[1em]">
+        <div class="flex justify-between items-center w-[100%]">
+            <div>
+                <h3 class="text-[1.3em] text-[#18171F]">ONLINE LERANING APP</h3>
+                <p class="text-[#03509c]">MAKE YOUR FUTURE</p>
+            </div>
+            <i class="bi bi-book text-[2em]"></i>
+        </div>
+        <!-- <div class="w-[100%] flex gap-[1em] justify-between items-center bg-[#fff] p-[0.5em] rounded-[10px]">
+            <i class="bi bi-search"></i>
+            <input placeholder="Search here..." type="search" class="w-[100%]">
+        </div> -->
+    </div>
+
+    <div class="products flex flex-col justify-right items-center gap-[1em] p-[1em] w-[100%]"></div>
+
+    <!-- <div class="p-[3em]"></div> -->
+
+    <div class="navBarGreen flex justify-between items-center p-[1em] w-[100%] bg-[#f0f0f0]">
+        <a href="./index.html" class="flex w-[5em] flex-col justify-center items-center">
+            <i class="text-[#18171F] bi bi-house-fill text-[1.5em]"></i>
+            <p class="text-[#777]">Home</p>
+        </a>
+
+        <a href="./cart.html" class="flex w-[5em] flex-col justify-center items-center">
+            <i class="text-[#666] bi bi-mortarboard-fill text-[1.5em]"></i>
+            <p class="text-[#777]">Enroll</p>
+        </a>
+
+        <a href="./profile.html" class="flex w-[5em] flex-col justify-center items-center">
+            <i class="text-[#666] bi bi-person-fill text-[1.5em]"></i>
+            <p class="text-[#777]">Account</p>
+        </a>
+    </div>
+
+    <!-- firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <!-- sweet alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- javascript -->
+    <script src="./main.js"></script>
+</body>
+
+</html>
